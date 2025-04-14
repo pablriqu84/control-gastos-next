@@ -3,10 +3,17 @@
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [movimientos, setMovimientos] = useState(() => {
-    const guardados = localStorage.getItem('movimientos');
-    return guardados ? JSON.parse(guardados) : [];
-  });
+  const [movimientos, setMovimientos] = useState([]);
+
+  useEffect(() => {
+    const guardados = typeof window !== 'undefined'
+      ? localStorage.getItem('movimientos')
+      : null;
+    if (guardados) {
+      setMovimientos(JSON.parse(guardados));
+    }
+  }, []);
+  
 
   const [descripcion, setDescripcion] = useState('');
   const [monto, setMonto] = useState('');
